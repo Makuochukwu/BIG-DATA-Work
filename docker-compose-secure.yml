@@ -1,0 +1,37 @@
+version: "3"
+services:
+  cockroach1:
+    image: cockroachdb/cockroach:latest
+    container_name: cockroach1
+    hostname: cockroach1
+    volumes:
+      - "$COCKROACH1_DATA_DIR:/cockroach/cockroach-data"
+      - "$COCKROACH1_CERTS_DIR:/certs"
+    ports:
+      - "26257:26257"
+      - "8880:8080"
+    command: "start --insecure --store=cockroach1 --advertise-addr=${COCKROACH1_HOST}:26257 --join=${COCKROACH1_HOST}:26257"
+
+  cockroach2:
+    image: cockroachdb/cockroach:latest
+    container_name: cockroach2
+    hostname: cockroach2
+    volumes:
+      - "$COCKROACH2_DATA_DIR:/cockroach/cockroach-data"
+      - "$COCKROACH2_CERTS_DIR:/certs"
+    ports:
+      - "26258:26257"
+      - "8881:8080"
+    command: "start --insecure --store=cockroach2 --advertise-addr=${COCKROACH2_HOST}:26258 --join=${COCKROACH2_HOST}:26257"
+
+  cockroach3:
+    image: cockroachdb/cockroach:latest
+    container_name: cockroach3
+    hostname: cockroach3
+    volumes:
+      - "$COCKROACH3_DATA_DIR:/cockroach/cockroach-data"
+      - "$COCKROACH3_CERTS_DIR:/certs"
+    ports:
+      - "26259:26257"
+      - "8882:8080"
+    command: "start --insecure --store=cockroach3 --advertise-addr=${COCKROACH3_HOST}:26259 --join=${COCKROACH3_HOST}:26257"
